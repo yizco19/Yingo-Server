@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cm.zy.mapper.OrderMapper">
+    <!-- Mapeo para insertar una orden -->
+    <insert id="addOrder" parameterType="cm.zy.pojo.Order">
+        <selectKey keyProperty="id" resultType="java.lang.Integer" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO `order` (user_id, created_at, total, status, pay_type, phone, address)
+        VALUES (#{userId}, #{createdAt}, #{total}, #{status}, #{payType}, #{phone}, #{address})
+    </insert>
+
+
+    <insert id="addOrderItems" parameterType="cm.zy.pojo.OrderItem">
+        INSERT INTO order_item (order_id, product_id, quantity , price)
+        VALUES
+        <foreach collection="orderItems" item="item" separator=",">
+            (#{item.orderId}, #{item.productId}, #{item.quantity} , #{item.price})
+        </foreach>
+
+    </insert>
+
+
+    <!-- Mapeo para actualizar una orden -->
+    <update id="updateOrder" parameterType="cm.zy.pojo.Order">
+        UPDATE order
+        SET
+        user_id = #{userId},
+        created_at = #{createdAt},
+        phone = #{phone},
+        address = #{address},
+        pay_type = #{payType},
+        total = #{total},
+        status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <!-- Mapeo para actualizar los elementos de la orden -->
+    <update id="updateOrderItems" parameterType="cm.zy.pojo.Order">
+        <foreach collection="orderItems" item="item" separator=";">
+            UPDATE order_item
+            SET
+            product_id = #{item.productId},
+            quantity = #{item.quantity}
+            WHERE id = #{item.id}
+        </foreach>
+    </update>
+    <select id="list" resultType="cm.zy.pojo.Order">
+        SELECT *
+        FROM `order`
+        <where>
+            <if test="userId != null">
+                AND user_id = #{userId}
+            </if>
+            <if test="status != null and status != 0">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="detail" resultType="cm.zy.pojo.Order">
+        SELECT *
+        FROM `order`
+        WHERE id = #{id}
+        ORDER BY created_at DESC
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM `order`
+        WHERE id = #{id}
+    </delete>
+    <update id="updateStatus" parameterType="java.lang.Integer">
+        UPDATE `order`
+        SET status = #{status}
+        WHERE id = #{id}
+    </update>
+    <select id="getAllOrders" resultType="cm.zy.pojo.Order">
+        SELECT *
+        FROM `order`
+    </select>
+</mapper>

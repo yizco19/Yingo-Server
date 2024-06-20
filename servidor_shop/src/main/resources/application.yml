@@ -1,0 +1,21 @@
+
+spring:
+    profiles:
+        group:
+            "dev": devServer,devDB
+            "local": localServer,localDB
+        active: dev
+
+
+mybatis:
+    configuration:
+        map-underscore-to-camel-case: true # Abre la configuración de mybatis en el archivo mybatis-config
+
+
+web:
+    upload-path: C:\Users\USUARIO\Desktop
+    url-path : http://192.168.100.111:8080/imagen/
+
+uploadcare:
+    public_key: ${UPLOADCARE_PUBLIC_KEY}  # Utiliza la variable de entorno para la clave pública de Uploadcare
+    secret_key: ${UPLOADCARE_SECRET_KEY}  # Utiliza la variable de entorno para la clave secreta de Uploadcare

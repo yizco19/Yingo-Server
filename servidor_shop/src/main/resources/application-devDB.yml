@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_URL}  # Utiliza la variable de entorno para la URL de la base de datos MySQL
+    username: ${MYSQL_USERNAME}  # Utiliza la variable de entorno para el usuario de MySQL
+    password: ${MYSQL_PASSWORD}  # Utiliza la variable de entorno para la contraseña de MySQL
+  data:
+    redis:
+      host: ${REDIS_HOST}  # Utiliza la variable de entorno para la URL de Redis
+      port: ${REDIS_PORT}  # Utiliza la variable de entorno para el puerto de Redis
+      password: ${REDIS_PASSWORD}  # Utiliza la variable de entorno para la contraseña de Redis
+      user: default

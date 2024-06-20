@@ -1,0 +1,23 @@
+spring:
+  web:
+    resources:
+      static-locations:
+        - file:///D:/data/
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/yingo
+    username: root
+    password: root
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: root@123456
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true #abrir la configuración de mybatis en el archivo mybatis-config
+
+web:
+  upload-path: D:/data/imagen
+
